@@ -1,0 +1,14 @@
+{
+   "name": "aws-mysql-liberty-two-node",
+   "description": "Description for aws-mysql-liberty-two-node.",
+   "type": "userCreated",
+   "manifest": {
+     "template_type": "Terraform",
+     "template_format": "HCL",
+     "template_provider": "Other"
+   },
+   "metadata": {
+     "displayName": "aws-mysql-liberty-two-node",
+     "bullets": []
+   }
+ }

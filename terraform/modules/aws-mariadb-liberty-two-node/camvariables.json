@@ -1,0 +1,253 @@
+{
+  "input_datatypes": [  {
+    "name": "aws_cloud",
+    "label": "AWS cloud settings"
+  } ],
+  "input_namespaces": [ ],
+  "output_namespace": "",
+  "input_groups": [
+    {
+      "name": "Instances-aws_instance.web-server",
+      "label": "Instances - aws_instance.web-server"
+    },
+    {
+      "name": "Other-aws",
+      "label": "Other - aws"
+    },
+    {
+      "name": "instances",
+      "label": "Instances"
+    },
+    {
+      "name": "aws_subnet_networks",
+      "label": "aws_subnet Networks"
+    },
+    {
+      "name": "aws_instance_connection",
+      "label": "aws_instance Connection"
+    },
+    {
+      "name": "null_resource_connection",
+      "label": "null_resource Connection"
+    },
+    {
+      "name": "aws_instance_networks",
+      "label": "aws_instance Networks"
+    },
+    {
+      "name": "security",
+      "label": "Security"
+    },
+    {
+      "name": "azurerm_virtual_machine_resource_group",
+      "label": "azurerm_virtual_machine Resource Group"
+    }
+  ],
+  "output_groups": [ ],
+  "template_input_params": [
+    {
+      "name": "db-server_ami",
+      "label": "Db Server Ami",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.centos-ami}",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "db-server_aws_instance_type",
+      "label": "Db Server Aws Instance Type",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.instance_type}",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "availability_zone",
+      "label": "Availability Zone",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.availability_zone}",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "db-server_name",
+      "label": "Db Server Name",
+      "description": "Generated",
+      "type": "string",
+      "default": "db-server",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "web-server_ami",
+      "label": "Web Server Ami",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.ubuntu-ami}",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "web-server_aws_instance_type",
+      "label": "Web Server Aws Instance Type",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.instance_type}",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "web-server_name",
+      "label": "Web Server Name",
+      "description": "Generated",
+      "type": "string",
+      "default": "web-server",
+      "validation": "",
+      "group_name": "instances",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "group_name",
+      "label": "Group Name",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.group_name}",
+      "validation": "",
+      "group_name": "security",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "vpc_id",
+      "label": "vpc_id",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws_cloud.vpc_id}",
+      "validation": "",
+      "group_name": "aws_subnet_networks",
+      "required": false,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "web-server-user",
+      "label": "web-server-user",
+      "description": "Generated",
+      "type": "string",
+      "default": "ubuntu",
+      "validation": "",
+      "group_name": "instances",
+      "required": false,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "db-server-user",
+      "label": "db-server-user",
+      "description": "Generated",
+      "type": "string",
+      "default": "centos",
+      "validation": "",
+      "group_name": "instances",
+      "required": false,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    }
+  ],
+  "template_output_params": [
+    {
+      "name": "web_server_ip_address",
+      "label": "Web Server Ip Address",
+      "description": "Web Server Ip Address",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "db_server_ip_address",
+      "label": "Db Server Ip Address",
+      "description": "Db Server Ip Address",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "tls-private-key",
+      "label": "Tls Private Key",
+      "description": "Tls Private Key",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "web-server-user",
+      "label": "web-server-user",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": ""
+    },
+    {
+      "name": "db-server-user",
+      "label": "db-server-user",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": ""
+    }
+  ]
+}
