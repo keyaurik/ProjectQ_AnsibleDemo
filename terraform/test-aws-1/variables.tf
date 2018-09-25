@@ -43,6 +43,7 @@ variable "vpc_id" {
 variable "jke-db_ami" {
   type = "string"
   description = "Generated"
+  default = "ami-b81dbfc5"
 }
 
 variable "jke-db_aws_instance_type" {
@@ -66,12 +67,13 @@ variable "group_name" {
 variable "ucd_user" {
   type = "string"
   description = "UCD User."
-  default = "PasswordIsAuthToken"
+  default = "admin"
 }
 
 variable "ucd_password" {
   type = "string"
-  description = "UCD Password."
+  description = "UCD Password"
+  default = "ec11ipse"
 }
 
 variable "ucd_server_url" {
@@ -80,24 +82,22 @@ variable "ucd_server_url" {
   default = "http://54.89.250.86:9080"
 }
 
-variable "private_key" {
-  type = "string"
-  description = "Generated"
-}
-
 variable "environment_name" {
   type = "string"
   description = "Environment name"
+  default = "jke-cmh"
 }
 
 variable "jke-db_agent_name" {
   type = "string"
   description = "Agent name"
+  default = "jke-db-agent-cmh"
 }
 
 variable "jke-web_agent_name" {
   type = "string"
   description = "Agent name"
+  default = "jke-web-agent-cmh"
 }
 
 
