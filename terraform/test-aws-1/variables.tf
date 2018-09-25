@@ -63,4 +63,41 @@ variable "group_name" {
   default = "ucdev_secgroup_nva"
 }
 
+variable "ucd_user" {
+  type = "string"
+  description = "UCD User."
+  default = "PasswordIsAuthToken"
+}
+
+variable "ucd_password" {
+  type = "string"
+  description = "UCD Password."
+}
+
+variable "ucd_server_url" {
+  type = "string"
+  description = "UCD Server URL."
+  default = "http://54.89.250.86:9080"
+}
+
+variable "private_key" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "environment_name" {
+  type = "string"
+  description = "Environment name"
+}
+
+variable "jke-db_agent_name" {
+  type = "string"
+  description = "Agent name"
+}
+
+variable "jke-web_agent_name" {
+  type = "string"
+  description = "Agent name"
+}
+
 
