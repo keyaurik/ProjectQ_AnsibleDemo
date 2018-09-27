@@ -147,5 +147,22 @@ EOT
         "chmod +x /tmp/install_liberty.sh; sudo bash /tmp/install_liberty.sh"
       ]
   }
+}
 
+module "jke-ucd-app" {
+  source = "../JKE-app-only"
+
+  ucd_user = "admin"
+  ucd_password = "ec11ipse"
+  ucd_server_url = "http://icdemo3.cloudy-demos.com:9080"
+  environment_name = "ucd-mod-env"
+  db-server_agent_name = "mod-db-agent" 
+  web-server_agent_name = "mod-web-agent"
+  web-server-public-ip-address = "${aws_instance.modweb1.public_ip}"
+  db-server-public-ip-address = "${aws_instance.moddb.public_ip}"
+  web-server-private-ssh-key = "${tls_private_key.ssh.private_key_pem}"
+  db-server-private-ssh-key = "${tls_private_key.ssh.private_key_pem}"
+  web-server-user = "${var.modweb1-user}"
+  db-server-user = "${var.moddb-user}"
+  
 }
