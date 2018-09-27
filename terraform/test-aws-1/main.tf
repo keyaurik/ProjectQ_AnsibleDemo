@@ -20,11 +20,9 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 
-
 data "aws_subnet" "subnet" {
   vpc_id = "${var.vpc_id}"
   availability_zone = "${var.availability_zone}"
-  
 }
 
 data "aws_security_group" "group_name" {
@@ -93,7 +91,7 @@ resource "tls_private_key" "ssh" {
 }
 
 resource "aws_key_pair" "auth" {
-    key_name = "${var.aws_key_pair_name}"
+    key_name = "${var.aws_key_pair_name}${random_id.jke-db_agent_id.dec}"
     public_key = "${tls_private_key.ssh.public_key_openssh}"
 }
 
@@ -134,7 +132,7 @@ resource "ucd_resource_tree" "resource_tree" {
 }
 
 resource "ucd_environment" "environment" {
-  name = "${var.environment_name}"
+  name = "${var.environment_name}-${random_id.jke-db_agent_id.dec}"
   application = "JKE"
   base_resource_group ="${ucd_resource_tree.resource_tree.id}"
   component_property {
