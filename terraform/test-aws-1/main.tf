@@ -128,7 +128,7 @@ resource "random_id" "jke-web_agent_id" {
 }
 
 resource "ucd_resource_tree" "resource_tree" {
-  base_resource_group_name = "Base Resource for environment ${var.environment_name}"
+  base_resource_group_name = "Base Resource for environment ${var.environment_name}-${random_id.jke-db_agent_id.dec}"
 }
 
 resource "ucd_environment" "environment" {
