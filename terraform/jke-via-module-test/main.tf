@@ -150,7 +150,7 @@ EOT
 }
 
 module "jke-ucd-app" {
-  source = "../JKE-app-only"
+  source = "git::https://github.com/chadh1313/cmh-test-github//terraform/JKE-app-only"
 
   ucd_user = "admin"
   ucd_password = "ec11ipse"
