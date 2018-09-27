@@ -160,8 +160,8 @@ module "jke-ucd-app" {
   web-server_agent_name = "mod-web-agent"
   web-server-public-ip-address = "${aws_instance.modweb1.public_ip}"
   db-server-public-ip-address = "${aws_instance.moddb.public_ip}"
-  web-server-private-ssh-key = "${base64decode(tls_private_key.ssh.private_key_pem)}"
-  db-server-private-ssh-key = "${base64decode(tls_private_key.ssh.private_key_pem)}"
+  web-server-private-ssh-key = "${base64encode(tls_private_key.ssh.private_key_pem)}"
+  db-server-private-ssh-key = "${base64encode(tls_private_key.ssh.private_key_pem)}"
   web-server-user = "${var.modweb1-user}"
   db-server-user = "${var.moddb-user}"
   
