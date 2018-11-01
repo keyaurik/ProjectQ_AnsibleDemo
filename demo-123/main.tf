@@ -1,6 +1,6 @@
 #####################################################################
 ##
-##      Created 11/1/18 by ucdpadmin. For Cloud aws-chadh for pac-life-demo
+##      Created 10/30/18 by ucdpadmin. For Cloud aws-chadh for demo-123
 ##
 #####################################################################
 
@@ -23,15 +23,13 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 
-
 data "aws_subnet" "subnet" {
-  vpc_id = "${var.vpc_id}"
-  availability_zone = "${var.availability_zone}"
+  id = "${var.subnet_subnet_id}"
 }
 
 data "aws_security_group" "group_name" {
   name = "${var.group_name}"
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${var.group_name_vpc_id}"
 }
 
 resource "aws_instance" "web-server" {
@@ -89,12 +87,6 @@ resource "ucd_component_mapping" "WebSphere_Liberty_Profile" {
   parent_id = "${ucd_agent_mapping.web-server_agent.id}"
 }
 
-resource "ucd_component_mapping" "jke_war" {
-  component = "jke.war"
-  description = "jke.war Component"
-  parent_id = "${ucd_agent_mapping.web-server_agent.id}"
-}
-
 resource "random_id" "web-server_agent_id" {
   byte_length = 8
 }
@@ -104,14 +96,6 @@ resource "ucd_component_process_request" "WebSphere_Liberty_Profile" {
   environment = "${ucd_environment.environment.id}"
   process = "deploy"
   resource = "${ucd_component_mapping.WebSphere_Liberty_Profile.id}"
-  version = "LATEST"
-}
-
-resource "ucd_component_process_request" "jke_war" {
-  component = "jke.war"
-  environment = "${ucd_environment.environment.id}"
-  process = "deploy"
-  resource = "${ucd_component_mapping.jke_war.id}"
   version = "LATEST"
 }
 
@@ -129,12 +113,6 @@ resource "ucd_environment" "environment" {
       value = "testme"
       secure = false
   }
-  component_property {
-      component = "jke.war"
-      name = "JKE_DB_HOST"
-      value = "${aws_instance.db-server.public_ip}"  # aws_instance
-      secure = false
-  }
 }
 
 resource "ucd_agent_mapping" "web-server_agent" {
@@ -143,3 +121,4 @@ resource "ucd_agent_mapping" "web-server_agent" {
   agent_name = "${var.web-server_agent_name}.${random_id.web-server_agent_id.dec}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
 }
+
