@@ -1,6 +1,6 @@
 #####################################################################
 ##
-##      Created 9/25/18 by ucdpadmin. For Cloud AWS-SPB for test-aws-1
+##      Created 1/15/19 by ucdpadmin. For Cloud aws-chadh for demo-456
 ##
 #####################################################################
 
@@ -20,6 +20,7 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 
+
 data "aws_subnet" "subnet" {
   vpc_id = "${var.vpc_id}"
   availability_zone = "${var.availability_zone}"
@@ -30,10 +31,10 @@ data "aws_security_group" "group_name" {
   vpc_id = "${var.vpc_id}"
 }
 
-resource "aws_instance" "jke-web" {
-  ami = "ami-759bc50a"
+resource "aws_instance" "web-server" {
+  ami = "${var.web-server_ami}"
   key_name = "${aws_key_pair.auth.id}"
-  instance_type = "${var.jke-web_aws_instance_type}"
+  instance_type = "${var.web-server_aws_instance_type}"
   availability_zone = "${var.availability_zone}"
   subnet_id  = "${data.aws_subnet.subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.group_name.id}"]
@@ -42,7 +43,7 @@ resource "aws_instance" "jke-web" {
     private_key = "${tls_private_key.ssh.private_key_pem}"  # tls_private_key
   }
   provisioner "ucd" {
-    agent_name      = "${var.jke-web_agent_name}.${random_id.jke-web_agent_id.dec}"
+    agent_name      = "${var.web-server_agent_name}.${random_id.web-server_agent_id.dec}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
@@ -50,27 +51,27 @@ resource "aws_instance" "jke-web" {
   provisioner "local-exec" {
     when = "destroy"
     command = <<EOT
-    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.jke-web_agent_name}.${random_id.jke-web_agent_id.dec} -X DELETE
+    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.web-server_agent_name}.${random_id.web-server_agent_id.dec} -X DELETE
 EOT
 }
   tags {
-    Name = "${var.jke-web_name}"
+    Name = "${var.web-server_name}"
   }
 }
 
-resource "aws_instance" "jke-db" {
-  ami = "${var.jke-db_ami}"
+resource "aws_instance" "db-server" {
+  ami = "${var.db-server_ami}"
   key_name = "${aws_key_pair.auth.id}"
-  instance_type = "${var.jke-db_aws_instance_type}"
+  instance_type = "${var.db-server_aws_instance_type}"
   availability_zone = "${var.availability_zone}"
   subnet_id  = "${data.aws_subnet.subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.group_name.id}"]
   connection {
-    user = "centos"
+    user = "ec2-user"
     private_key = "${tls_private_key.ssh.private_key_pem}"  # tls_private_key
   }
   provisioner "ucd" {
-    agent_name      = "${var.jke-db_agent_name}.${random_id.jke-db_agent_id.dec}"
+    agent_name      = "${var.db-server_agent_name}.${random_id.db-server_agent_id.dec}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
@@ -78,11 +79,11 @@ resource "aws_instance" "jke-db" {
   provisioner "local-exec" {
     when = "destroy"
     command = <<EOT
-    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.jke-db_agent_name}.${random_id.jke-db_agent_id.dec} -X DELETE
+    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.db-server_agent_name}.${random_id.db-server_agent_id.dec} -X DELETE
 EOT
 }
   tags {
-    Name = "${var.jke-db_name}"
+    Name = "${var.db-server_name}"
   }
 }
 
@@ -91,62 +92,84 @@ resource "tls_private_key" "ssh" {
 }
 
 resource "aws_key_pair" "auth" {
-    key_name = "${var.aws_key_pair_name}${random_id.jke-db_agent_id.dec}"
+    key_name = "${var.aws_key_pair_name}"
     public_key = "${tls_private_key.ssh.public_key_openssh}"
 }
 
 resource "ucd_component_mapping" "MySQL_Server" {
   component = "MySQL Server"
   description = "MySQL Server Component"
-  parent_id = "${ucd_agent_mapping.jke-db_agent.id}"
+  parent_id = "${ucd_agent_mapping.db-server_agent.id}"
 }
 
 resource "ucd_component_mapping" "jke_db" {
   component = "jke.db"
   description = "jke.db Component"
-  parent_id = "${ucd_agent_mapping.jke-db_agent.id}"
+  parent_id = "${ucd_agent_mapping.db-server_agent.id}"
 }
 
 resource "ucd_component_mapping" "WebSphere_Liberty_Profile" {
   component = "WebSphere Liberty Profile"
   description = "WebSphere Liberty Profile Component"
-  parent_id = "${ucd_agent_mapping.jke-web_agent.id}"
+  parent_id = "${ucd_agent_mapping.web-server_agent.id}"
 }
 
 resource "ucd_component_mapping" "jke_war" {
   component = "jke.war"
   description = "jke.war Component"
-  parent_id = "${ucd_agent_mapping.jke-web_agent.id}"
+  parent_id = "${ucd_agent_mapping.web-server_agent.id}"
 }
 
-resource "random_id" "jke-db_agent_id" {
+resource "random_id" "db-server_agent_id" {
   byte_length = 8
 }
 
-resource "random_id" "jke-web_agent_id" {
+resource "random_id" "web-server_agent_id" {
   byte_length = 8
+}
+
+resource "ucd_component_process_request" "MySQL_Server" {
+  component = "MySQL Server"
+  environment = "${ucd_environment.environment.id}"
+  process = "deploy mysql 5.7"
+  resource = "${ucd_component_mapping.MySQL_Server.id}"
+  version = "LATEST"
+}
+
+resource "ucd_component_process_request" "jke_db" {
+  depends_on = [ "ucd_component_process_request.MySQL_Server", "ucd_component_process_request.WebSphere_Liberty_Profile" ]
+  component = "jke.db"
+  environment = "${ucd_environment.environment.id}"
+  process = "deploy"
+  resource = "${ucd_component_mapping.jke_db.id}"
+  version = "LATEST"
+}
+
+resource "ucd_component_process_request" "WebSphere_Liberty_Profile" {
+  component = "WebSphere Liberty Profile"
+  environment = "${ucd_environment.environment.id}"
+  process = "deploy"
+  resource = "${ucd_component_mapping.WebSphere_Liberty_Profile.id}"
+  version = "LATEST"
+}
+
+resource "ucd_component_process_request" "jke_war" {
+  depends_on = [ "ucd_component_process_request.jke_db" ]
+  component = "jke.war"
+  environment = "${ucd_environment.environment.id}"
+  process = "deploy"
+  resource = "${ucd_component_mapping.jke_war.id}"
+  version = "LATEST"
 }
 
 resource "ucd_resource_tree" "resource_tree" {
-  base_resource_group_name = "Base Resource for environment ${var.environment_name}-${random_id.jke-db_agent_id.dec}"
+  base_resource_group_name = "Base Resource for environment ${var.environment_name}"
 }
 
 resource "ucd_environment" "environment" {
-  name = "${var.environment_name}-${random_id.jke-db_agent_id.dec}"
+  name = "${var.environment_name}"
   application = "JKE"
   base_resource_group ="${ucd_resource_tree.resource_tree.id}"
-  component_property {
-      component = "MySQL Server"
-      name = "test2"
-      value = ""
-      secure = false
-  }
-  component_property {
-      component = "MySQL Server"
-      name = "test"
-      value = ""
-      secure = false
-  }
   component_property {
       component = "jke.db"
       name = "ChadPropEnv"
@@ -162,44 +185,21 @@ resource "ucd_environment" "environment" {
   component_property {
       component = "jke.war"
       name = "JKE_DB_HOST"
-      value = "${aws_instance.jke-db.public_ip}"  # aws_instance
+      value = "${aws_instance.db-server.public_ip}"  # aws_instance
       secure = false
   }
 }
 
-resource "ucd_agent_mapping" "jke-db_agent" {
-  depends_on = [ "aws_instance.jke-db" ]
-  description = "Agent to manage the jke-db server"
-  agent_name = "${var.jke-db_agent_name}.${random_id.jke-db_agent_id.dec}"
+resource "ucd_agent_mapping" "db-server_agent" {
+  depends_on = [ "aws_instance.db-server" ]
+  description = "Agent to manage the db-server server"
+  agent_name = "${var.db-server_agent_name}.${random_id.db-server_agent_id.dec}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
 }
 
-resource "ucd_agent_mapping" "jke-web_agent" {
-  depends_on = [ "aws_instance.jke-web" ]
-  description = "Agent to manage the jke-web server"
-  agent_name = "${var.jke-web_agent_name}.${random_id.jke-web_agent_id.dec}"
+resource "ucd_agent_mapping" "web-server_agent" {
+  depends_on = [ "aws_instance.web-server" ]
+  description = "Agent to manage the web-server server"
+  agent_name = "${var.web-server_agent_name}.${random_id.web-server_agent_id.dec}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
-}
-
-resource "ucd_application_process_request" "application_process_request" {
-  depends_on = [ "ucd_component_mapping.MySQL_Server", "ucd_component_mapping.jke_db", "ucd_component_mapping.WebSphere_Liberty_Profile", "ucd_component_mapping.jke_war" ]
-  application = "JKE"
-  application_process = "install-hybrid-centos"
-  environment = "${ucd_environment.environment.name}"
-  component_version {
-      component = "MySQL Server"
-      version = "latest"
-  }
-  component_version {
-      component = "jke.db"
-      version = "latest"
-  }
-  component_version {
-      component = "WebSphere Liberty Profile"
-      version = "latest"
-  }
-  component_version {
-      component = "jke.war"
-      version = "latest"
-  }
 }

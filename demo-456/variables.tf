@@ -1,13 +1,19 @@
 #####################################################################
 ##
-##      Created 9/25/18 by ucdpadmin. For Cloud AWS-SPB for test-aws-1
+##      Created 1/15/19 by ucdpadmin. For Cloud aws-chadh for demo-456
 ##
 #####################################################################
 
-variable "jke-web_aws_instance_type" {
+variable "web-server_ami" {
   type = "string"
   description = "Generated"
-  default = "t2.medium"
+  default = "ami-759bc50a"
+}
+
+variable "web-server_aws_instance_type" {
+  default = t2.medium
+  type = "string"
+  description = "Generated"
 }
 
 variable "availability_zone" {
@@ -16,40 +22,40 @@ variable "availability_zone" {
   default = "us-east-1a"
 }
 
-variable "jke-web_name" {
+variable "web-server_name" {
   type = "string"
   description = "Generated"
-  default = "jke-web-cmh"
+  default = "web456"
 }
 
 variable "aws_key_pair_name" {
   type = "string"
   description = "Generated"
-  default = "jke-web-key-cmh"
+  default = "key456"
+}
+
+variable "db-server_ami" {
+  type = "string"
+  description = "Generated"
+  default = "ami-b81dbfc5"
+}
+
+variable "db-server_aws_instance_type" {
+  default = t2.medium
+  type = "string"
+  description = "Generated"
+}
+
+variable "db-server_name" {
+  type = "string"
+  description = "Generated"
+  default = "db456"
 }
 
 variable "vpc_id" {
   type = "string"
   description = "Generated"
   default = "vpc-6c51be09"
-}
-
-variable "jke-db_ami" {
-  type = "string"
-  description = "Generated"
-  default = "ami-b81dbfc5"
-}
-
-variable "jke-db_aws_instance_type" {
-  type = "string"
-  description = "Generated"
-  default = "t2.medium"
-}
-
-variable "jke-db_name" {
-  type = "string"
-  description = "Generated"
-  default = "jke-db-cmh"
 }
 
 variable "group_name" {
@@ -66,8 +72,7 @@ variable "ucd_user" {
 
 variable "ucd_password" {
   type = "string"
-  description = "UCD Password"
-  default = "ec11ipse"
+  description = "UCD Password."
 }
 
 variable "ucd_server_url" {
@@ -79,19 +84,18 @@ variable "ucd_server_url" {
 variable "environment_name" {
   type = "string"
   description = "Environment name"
-  default = "jke-cmh"
+  default = "env456"
 }
 
-variable "jke-db_agent_name" {
+variable "db-server_agent_name" {
   type = "string"
   description = "Agent name"
-  default = "jke-db-agent-cmh"
+  default = "dbagent456"
 }
 
-variable "jke-web_agent_name" {
+variable "web-server_agent_name" {
   type = "string"
   description = "Agent name"
-  default = "jke-web-agent-cmh"
+  default = "webagent456"
 }
-
 
