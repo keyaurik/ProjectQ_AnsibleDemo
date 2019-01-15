@@ -22,7 +22,7 @@ provider "ucd" {
 
 
 data "aws_subnet" "subnet" {
-  id = "${var.vpc_id}"
+  vpc_id = "${var.vpc_id}"
   availability_zone = "${var.availability_zone}"
 }
 
