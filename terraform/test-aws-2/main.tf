@@ -39,8 +39,8 @@ resource "aws_instance" "jke-web" {
   subnet_id  = "${data.aws_subnet.subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.group_name.id}"]
   connection {
-    user = "TODO"
-    private_key = "${var.private_key}"
+    user = "ubuntu"
+    private_key = "${tls_private_key.ssh.private_key_pem}"  # tls_private_key
   }
   provisioner "ucd" {
     agent_name      = "${var.jke-web_agent_name}.${random_id.jke-web_agent_id.dec}"

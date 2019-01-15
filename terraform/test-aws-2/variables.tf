@@ -56,11 +56,6 @@ variable "ucd_server_url" {
   default = "http://54.89.250.86:9080"
 }
 
-variable "private_key" {
-  type = "string"
-  description = "Generated"
-}
-
 variable "environment_name" {
   type = "string"
   description = "Environment name"
