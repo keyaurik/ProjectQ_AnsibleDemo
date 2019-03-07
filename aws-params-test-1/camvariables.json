@@ -1,5 +1,8 @@
 {
-  "input_datatypes": [],
+  "input_datatypes": [  {
+    "name": "aws-complex-params",
+    "label": "aws-complex-params"
+  } ],
   "input_namespaces": [ ],
   "output_namespace": "",
   "input_groups": [
@@ -18,58 +21,20 @@
     {
       "name": "instances",
       "label": "Instances"
+    },
+    {
+      "name": "aws_instance_networks",
+      "label": "aws_instance Networks"
     }
   ],
   "output_groups": [ ],
   "template_input_params": [
     {
-      "name": "aws_access_id",
-      "label": "Aws Access Id",
-      "description": "Generated",
-      "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "instances",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
-      "name": "aws_secret_key",
-      "label": "Aws Secret Key",
-      "description": "Generated",
-      "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "instances",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
-      "name": "region",
-      "label": "Region",
-      "description": "Generated",
-      "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "instances",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
       "name": "aws_instance_ami",
       "label": "Aws Instance Ami",
       "description": "Generated",
       "type": "string",
-      "default": "",
+      "default": "${aws-complex-params.ami_list}",
       "validation": "",
       "group_name": "instances",
       "required": true,
@@ -125,7 +90,7 @@
       "label": "Aws Key Pair Name",
       "description": "Generated",
       "type": "string",
-      "default": "${cmh-test-datatype.teststr}",
+      "default": "",
       "validation": "",
       "group_name": "instances",
       "required": true,
@@ -135,32 +100,13 @@
       "immutable_after_create": false
     },
     {
-      "name": "testmapvar1",
-      "label": "Testmapvar 1",
-      "description": "Testmapvar 1",
-      "type": "map",
-      "default": {
-        "development": "bucket-dev",
-        "staging": "bucket-for-staging",
-        "preprod": "bucket-name-for-preprod",
-        "production": "bucket-for-production"
-      },
+      "name": "subnet_id",
+      "label": "Subnet Id",
+      "description": "Generated",
+      "type": "string",
+      "default": "${aws-complex-params.subnet_map}",
       "validation": "",
-      "group_name": "",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
-      "name": "testmap2",
-      "label": "Testmap 2",
-      "description": "Testmap 2",
-      "type": "map",
-      "default": "${cmh-test-datatype.test-map-2}",
-      "validation": "",
-      "group_name": "",
+      "group_name": "aws_instance_networks",
       "required": true,
       "secured": false,
       "hidden": false,

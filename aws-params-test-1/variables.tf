@@ -1,6 +1,6 @@
 #####################################################################
 ##
-##      Created 3/5/19 by admin. For Cloud cmh-vra for shared-params-test
+##      Created 3/7/19 by admin. For Cloud cmh-vra for aws-params-test-1
 ##
 #####################################################################
 
@@ -29,9 +29,8 @@ variable "aws_key_pair_name" {
   description = "Generated"
 }
 
-variable "subnet_id_id" {
+variable "subnet_id" {
   type = "string"
   description = "Generated"
 }
-
 
