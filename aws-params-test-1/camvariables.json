@@ -34,7 +34,7 @@
       "label": "Aws Instance Ami",
       "description": "Generated",
       "type": "string",
-      "default": "${aws-complex-params.ami_list}",
+      "default": "${aws-complex-params.ami}",
       "validation": "",
       "group_name": "instances",
       "required": true,
@@ -48,7 +48,7 @@
       "label": "Aws Instance Aws Instance Type",
       "description": "Generated",
       "type": "string",
-      "default": "",
+      "default": "t2.small",
       "validation": "",
       "group_name": "instances",
       "required": true,
@@ -104,14 +104,29 @@
       "label": "Subnet Id",
       "description": "Generated",
       "type": "string",
-      "default": "${aws-complex-params.subnet_map}",
+      "default": "",
       "validation": "",
       "group_name": "aws_instance_networks",
       "required": true,
       "secured": false,
       "hidden": false,
       "immutable": false,
-      "immutable_after_create": false
+      "immutable_after_create": false,
+      "options": [
+        {
+          "value": "${aws-complex-params.subnet_primary}",
+          "label": "primary",
+          "default": true
+        },
+        {
+          "value": "${aws-complex-params.subnet_secondary}",
+          "label": "secondary"
+        },
+        {
+          "value": "${aws-complex-params.subnet_tertiary}",
+          "label": "tertiary"
+        }
+      ]
     }
   ],
   "template_output_params": [ ]
