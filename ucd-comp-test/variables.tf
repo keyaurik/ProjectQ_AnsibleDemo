@@ -76,4 +76,3 @@ variable "aws_instance_agent_name" {
   default = "comptestagent"
 }
 
-
