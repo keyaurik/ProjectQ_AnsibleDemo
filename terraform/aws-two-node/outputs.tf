@@ -18,6 +18,16 @@ output "web_server_ip_address" {
 }
 
 # DB server IP address
+output "db_server_ip_address_with_user" {
+  value = "${var.centos-user}@${aws_instance.db-server.public_ip}"
+}
+
+# Web server IP address with user
+output "web_server_ip_address_with_user" {
+  value = "${var.centos-user}@${aws_instance.web-server.public_ip}"
+}
+
+# DB server IP address with user
 output "db_server_ip_address" {
   value = "${aws_instance.db-server.public_ip}"
 }
