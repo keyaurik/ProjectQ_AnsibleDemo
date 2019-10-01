@@ -151,6 +151,26 @@
       "type": "list"
     },
     {
+      "name": "web_server_ip_address_with_user",
+      "label": "Web Server Ip Address With user",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "db_server_ip_address_with_user",
+      "label": "DB Server Ip Address With user",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
       "name": "web_server_ip_address",
       "label": "Web Server Ip Address",
       "description": "",
