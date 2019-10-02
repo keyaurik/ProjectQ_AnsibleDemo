@@ -27,6 +27,16 @@ output "web_server_ip_address_with_user" {
   value = "${var.centos-user}@${aws_instance.web-server.public_ip}"
 }
 
+# DB server IP address with user and key
+output "db_server_ip_address_with_user_and_key" {
+  value = { "${var.centos-user}@${aws_instance.db-server.public_ip}" = "${base64encode(tls_private_key.ssh.private_key_pem)}" }
+}
+
+# Web server IP address with user and key
+output "web_server_ip_address_with_user_and_key" {
+  value = { "${var.centos-user}@${aws_instance.web-server.public_ip}" = "${base64encode(tls_private_key.ssh.private_key_pem)}" }
+}
+
 # DB server IP address with user
 output "db_server_ip_address" {
   value = "${aws_instance.db-server.public_ip}"

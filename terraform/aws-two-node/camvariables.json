@@ -171,6 +171,26 @@
       "type": "string"
     },
     {
+      "name": "web_server_ip_address_with_user_and_key",
+      "label": "Web Server Ip Address With user and key",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "map"
+    },
+    {
+      "name": "db_server_ip_address_with_user_and_key",
+      "label": "DB Server Ip Address With user and key",
+      "description": "",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "map"
+    },
+    {
       "name": "web_server_ip_address",
       "label": "Web Server Ip Address",
       "description": "",
