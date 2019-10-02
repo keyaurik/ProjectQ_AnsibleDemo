@@ -1,0 +1,55 @@
+{
+  "input_datatypes": [ ],
+  "input_namespaces": [ ],
+  "output_namespace": "",
+  "input_groups": [  {
+    "name": "Other-null_resource.null_resource",
+    "label": "Other - null_resource.null_resource"
+  } ],
+  "output_groups": [ ],
+  "template_input_params": [
+    {
+      "name": "connection_user",
+      "label": "Connection User",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "connection_private_key",
+      "label": "Connection Private Key",
+      "description": "",
+      "type": "string",
+      "default": "key_value",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "connection_host",
+      "label": "Connection Host",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    }
+  ],
+  "template_output_params": [ ]
+}
