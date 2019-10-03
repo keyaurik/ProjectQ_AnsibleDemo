@@ -31,12 +31,16 @@ resource "aws_instance" "web-server" {
   availability_zone = "${var.availability_zone}"
   subnet_id  = "${data.aws_subnet.subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.group_name.id}"]
+
   tags = "${merge(
     module.camtags.tagsmap,
     map(
       "Name", "cmh-ans-web-1"
     )
   )}"
+  provisioner "local-exec" {
+      command = "sleep 30"
+  }
 }
 
 resource "aws_instance" "db-server" {
@@ -52,6 +56,9 @@ resource "aws_instance" "db-server" {
       "Name", "cmh-ans-db-1"
     )
   )}"
+  provisioner "local-exec" {
+      command = "sleep 30"
+  }
 }
 
 resource "tls_private_key" "ssh" {
