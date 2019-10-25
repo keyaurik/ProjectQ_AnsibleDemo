@@ -14,7 +14,6 @@ provider "aws" {
   version = "~> 1.8"
 }
 
-
 data "aws_subnet" "subnet" {
   vpc_id = "${var.vpc_id}"
   availability_zone = "${var.availability_zone}"
@@ -33,8 +32,14 @@ resource "aws_instance" "aws-instance" {
   availability_zone = "${var.availability_zone}"
   subnet_id  = "${data.aws_subnet.subnet.id}"
   vpc_security_group_ids = ["${data.aws_security_group.group_name.id}"]
-  tags {
-    Name = "${var.instance_name}-${count.index}"
+  tags = "${merge(
+    module.camtags.tagsmap,
+    map(
+      "Name", "${var.instance_name}-${count.index}"
+    )
+  )}"
+  provisioner "local-exec" {
+      command = "sleep 30"
   }
 }
 
@@ -45,4 +50,8 @@ resource "tls_private_key" "ssh" {
 resource "aws_key_pair" "auth" {
     key_name = "${var.aws_key_pair_name}"
     public_key = "${tls_private_key.ssh.public_key_openssh}"
+}
+
+module "camtags" {
+  source  = "../Modules/camtags"
 }
