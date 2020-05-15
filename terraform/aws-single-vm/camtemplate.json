@@ -1,0 +1,14 @@
+{
+   "name": "aws-single-vm",
+   "description": "Provision single VM in AWS on existing network stack.",
+   "type": "userCreated",
+   "manifest": {
+     "template_type": "Terraform",
+     "template_provider": "Amazon EC2",
+     "template_format": "HCL",
+     "template_provider": "Other"
+   },
+   "metadata": {
+     "bullets": []
+   }
+ }
