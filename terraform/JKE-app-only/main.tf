@@ -109,12 +109,6 @@ resource "ucd_environment" "environment" {
   application = "JKE"
   base_resource_group ="${ucd_resource_tree.resource_tree.id}"
   component_property {
-      component = "jke.db"
-      name = "ChadPropEnv"
-      value = "default"
-      secure = false
-  }
-  component_property {
       component = "jke.war"
       name = "JKE_DB_HOST"
       value = "${var.db-server-public-ip-address}"  # Generated
