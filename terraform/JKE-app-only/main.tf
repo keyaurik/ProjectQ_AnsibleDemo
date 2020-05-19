@@ -86,7 +86,7 @@ resource "ucd_component_mapping" "jke_war" {
 resource "ucd_component_process_request" "jke_db" {
   component = "jke.db"
   environment = "${ucd_environment.environment.id}"
-  process = "deploy-mariadb"
+  process = "deploy"
   resource = "${ucd_component_mapping.jke_db.id}"
   version = "LATEST"
 }
