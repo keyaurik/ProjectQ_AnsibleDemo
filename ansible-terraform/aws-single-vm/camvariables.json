@@ -133,7 +133,7 @@
       "label": "Group Name",
       "description": "Existing security group name",
       "type": "string",
-      "default": "sg-017d953808c46aacf",
+      "default": "default",
       "validation": "",
       "group_name": "",
       "required": true,
