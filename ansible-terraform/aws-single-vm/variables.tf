@@ -13,7 +13,7 @@ variable "ansible-runtime-host_ami" {
 variable "instance_type" {
   type = "string"
   description = "instance type"
-  default = "t2.medium"
+  default = "t2.micro"
 }
 
 variable "availability_zone" {
@@ -43,13 +43,13 @@ variable "aws_key_pair_name" {
 variable "vpc_id" {
   type = "string"
   description = "Existing VPC ID"
-  default = "vpc-6c51be09"
+  default = "vpc-060a4d8d66bcadf5b"
 }
 
 variable "group_name" {
   type = "string"
   description = "Existing security group name"
-  default = "ucdev_secgroup_nva"
+  default = "sg-017d953808c46aacf"
 }
 
 variable "instance_count" {
