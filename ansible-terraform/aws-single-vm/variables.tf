@@ -49,7 +49,7 @@ variable "vpc_id" {
 variable "group_name" {
   type = "string"
   description = "Existing security group name"
-  default = "sg-017d953808c46aacf"
+  default = "default"
 }
 
 variable "instance_count" {
