@@ -7,7 +7,7 @@
 variable "ansible-runtime-host_ami" {
   type = "string"
   description = "AMI"
-  default = "ami-b81dbfc5"
+  default = "ami-098f16afa9edf40be"
 }
 
 variable "instance_type" {
